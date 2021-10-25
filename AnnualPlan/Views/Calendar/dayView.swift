@@ -21,10 +21,9 @@ struct dayView: View {
                 }) {
                     Text("\(value.day)")
                         .font(.title3).bold()
-                        //.foregroundColor(colorSelect(task: task, value: value)) -- 미완성
-                        .foregroundColor(shared.isSameDay(date1: task.taskDate, date2: currentDate) ? .white : .primary)
+                        .foregroundColor(shared.isSameDay(date1: task.taskDate, date2: currentDate) ? .white : colorSelect(yoilIndex: value.index))
                         .frame(maxWidth: .infinity)
-                    Text("\(value.index)").font(.caption2).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    //Text("\(value.index)").font(.caption2).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/) // 인덱스 추가분
                     Spacer()
                     Circle()
                         .fill(shared.isSameDay(date1: task.taskDate, date2: currentDate) ? .white : Color.pink)
@@ -32,51 +31,27 @@ struct dayView: View {
                 }else {
                     Text("\(value.day)")
                         .font(.title3).bold()
-                        //.foregroundColor(colorSelect(value: value)) -- 미완성
-                        .foregroundColor(shared.isSameDay(date1: value.date, date2: currentDate) ? .white : .primary)
+                        .foregroundColor(shared.isSameDay(date1: value.date, date2: currentDate) ? .white : colorSelect(yoilIndex: value.index))
                         .frame(maxWidth: .infinity)
-                    Text("\(value.index)").font(.caption2).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+                    //Text("\(value.index)").font(.caption2).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
                     Spacer()
                 }
-            }else {
-                Text("\(value.day)")
-                    .font(.title3).bold()
-                    //.foregroundColor(colorSelect(value: value)) -- 미완성
-                    .foregroundColor(shared.isSameDay(date1: value.date, date2: currentDate) ? .white : .primary)
-                    .frame(maxWidth: .infinity)
-                Text("\(value.index)").font(.caption2).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-                Spacer()
             }
         }
         .padding(.vertical, 9)
         .frame(height: 60, alignment: .top)
     }
-// -- 미완성 :: 토일 색갈 구분
-//    func colorSelect(task: TaskDetail, value: DayValue) -> Color {
-//        if (value.day % 7) == 0 {
-//            return Color.blue
-//        } else if value.day == 1 || value.day == 8 || value.day == 15 || value.day == 22 || value.day == 29 || value.day == 36 {
-//            return Color.red
-//        }
-//        if shared.isSameDay(date1: task.taskDate, date2: currentDate) {
-//            return Color.white
-//        }else {
-//            return Color.primary
-//        }
-//    }
-//
-//    func colorSelect(value: DayValue) -> Color {
-//        if (value.day % 7) == 0 {
-//            return Color.blue
-//        } else if value.day == 1 || value.day == 8 || value.day == 15 || value.day == 22 || value.day == 29 || value.day == 36 {
-//            return Color.red
-//        }
-//        if shared.isSameDay(date1: value.date, date2: currentDate) {
-//            return Color.white
-//        }else {
-//            return Color.primary
-//        }
-//    }
+//  요일 인덱스에 따라 토/일 색갈 지정
+    func colorSelect(yoilIndex: Int) -> Color {
+        switch yoilIndex {
+        case 1:
+            return Color.red
+        case 7:
+            return Color.blue
+        default:
+            return Color.primary
+        }
+    }
 }
 
 struct dayView_Previews: PreviewProvider {

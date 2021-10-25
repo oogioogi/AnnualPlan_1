@@ -36,18 +36,18 @@ final class SharedClass: ObservableObject {
         // days: [DateValue]
         var days = currentMonth.getAllDate().compactMap { date -> DayValue in
             let day = calendar.component(.day, from: date)
-            return DayValue(day: day, index: -1, date: (date + 84600)) // 86400초 = 1일
+            // 요일 추출후 1:일 ~ 6:토 까지 yoilIndex에 추가 함
+            let index = calendar.dateComponents([.weekday], from: date)
+            let yoilIndex = index.weekday!
+            
+            return DayValue(day: day, index: yoilIndex, date: (date + 84600)) // 86400초 = 1일
         }
         
         //offset day index
         let firstWeekDay = calendar.component(.weekday, from: days.first?.date ?? Date().toLocalTime())
-        for i in 0..<firstWeekDay - 1 {
-            days.insert(DayValue(day: -1, index: i, date: Date().toLocalTime()), at: 0)
+        for _ in 0..<firstWeekDay - 1 {
+            days.insert(DayValue(day: -1, index: 0, date: Date().toLocalTime()), at: 0)
         }
-//        for _ in 0..<firstWeekDay - 1 {
-//            days.insert(DayValue(day: -1, date: Date().toLocalTime()), at: 0)
-//        }
-    
         return days
     }
 }
@@ -93,15 +93,10 @@ extension Date {
         // 시작일 얻음
         let startDate = calendar.date(from: Calendar.current.dateComponents([.year, .month], from: self))!
         let range = calendar.range(of: .day, in: .month, for: startDate)!
-        //let firstDay = Calendar.current.component(.weekday, from: startDate)
-        //range.removeLast()
-        //데이트 얻음
         //debugPrint(startDate)
         return range.compactMap{ day -> Date in
             //debugPrint(day)
-            let newDate = calendar.date(bySetting: .day, value: day, of: startDate)!
-            return newDate
-            //return calendar.date(byAdding: .day, value: day - 1, to: startDate)!
+            return calendar.date(bySetting: .day, value: day, of: startDate)!
         }
     }
 }
