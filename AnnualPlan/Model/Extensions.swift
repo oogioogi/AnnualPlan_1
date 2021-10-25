@@ -13,7 +13,9 @@ final class SharedClass: ObservableObject {
     func add() {
         self.currentMonth += 1
     }
-    
+    func mid() {
+        self.currentMonth = 0
+    }
     func sub() {
         self.currentMonth -= 1
     }

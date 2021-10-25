@@ -10,7 +10,7 @@ import SwiftUI
 struct DayValue: Identifiable {
     var id: String = UUID().uuidString
     var day: Int
-    var index: Int
+    var index: Int // 요일 인덱스
     var date: Date
 }
 

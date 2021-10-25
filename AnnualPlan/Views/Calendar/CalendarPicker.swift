@@ -11,59 +11,74 @@ struct CalendarPicker: View {
     @EnvironmentObject var taskClass: TaskClass
     @EnvironmentObject var shared: SharedClass
     @Binding var currentDate: Date
+    @State private var isAlert: Bool = false
 
     var body: some View {
     
-        VStack(spacing: 20) {
-            HStack(spacing: 20) {
-                VStack(alignment: .leading, spacing: 2) {
-                    Text(extractDate()[0])
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                    Text(extractDate()[1])
-                        .font(.title).bold()
-                }
-                Spacer()
-                Button(action: {
-                    shared.sub()
-                }, label: {
-                    Image(systemName: "chevron.left")
-                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                })
-                Button(action: {
-                    shared.add()
-                }, label: {
-                    Image(systemName: "chevron.right")
-                        .font(.title)
-                })
-            }.padding(.horizontal)  // top title
-    
-            calendarHeader() // 요일
-            // 날짜
-            let colums = Array(repeating: GridItem(.flexible()), count: 7)
-            LazyVGrid(columns: colums, spacing: 15) {
-                ForEach(shared.extractDate()) {  value in
-                    dayView(currentDate: $currentDate, value: value)
-                        .background(
-                            Capsule()
-                                .fill(Color.pink)
-                                .padding(.horizontal, 8)
-                                .opacity(shared.isSameDay(date1: value.date, date2: currentDate) ? 1 : 0)
-                        )
-                        .onTapGesture {
-                            currentDate = value.date
-                            debugPrint(value.date)
-                        }
-                }
-                
+        ZStack {
+            VStack(spacing: 20) {
+                HStack(spacing: 20) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(extractDate()[0])
+                            .font(.caption)
+                            .foregroundColor(.gray)
+                        Text(extractDate()[1])
+                            .font(.title).bold()
+                    }
+                    Spacer()
+                    Button(action: {
+                        shared.sub()
+                    }, label: {
+                        Image(systemName: "arrow.uturn.backward.circle.fill")
+                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    })
+                    Button(action: {
+                        shared.mid()
+                    }, label: {
+                        Image(systemName: "arrow.up.and.down.circle.fill")
+                            .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    })
+                    Button(action: {
+                        shared.add()
+                    }, label: {
+                        Image(systemName: "arrow.uturn.right.circle.fill")
+                            .font(.title)
+                    })
+                }.padding(.horizontal)  // top title
+                calendarHeader() // 요일
+                // 날짜
+                let colums = Array(repeating: GridItem(.flexible()), count: 7)
+                LazyVGrid(columns: colums, spacing: 15) {
+                    ForEach(shared.extractDate()) {  value in
+                        dayView(currentDate: $currentDate, value: value)
+                            .background(
+                                Capsule()
+                                    .fill(Color.purple)
+                                    .padding(.horizontal, 8)
+                                    .opacity(shared.isSameDay(date1: value.date, date2: currentDate) ? 1 : 0)
+                            )
+                            .onTapGesture {
+                                currentDate = value.date
+                                debugPrint(value.date)
+                            }
+                            .onLongPressGesture {
+                                self.isAlert.toggle()
+                            }
+                    }
+                } // 날짜 표시부
+            }
+            .onChange(of: shared.currentMonth, perform: { _ in
+                currentDate = shared.getCurrentMonth()
+            })
+            .onAppear(perform: {
+                currentDate = shared.getCurrentMonth()
+        })
+            
+            if self.isAlert {
+                //Text("long click")
+                AlertAddTaskView(isAlert: $isAlert)
             }
         }
-        .onChange(of: shared.currentMonth, perform: { _ in
-            currentDate = shared.getCurrentMonth()
-        })
-        .onAppear(perform: {
-            currentDate = shared.getCurrentMonth()
-        })
     }
     
     func extractDate() -> [String] {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		86346A7E27269C7C007F96DC /* AlertAddTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86346A7D27269C7C007F96DC /* AlertAddTaskView.swift */; };
 		86CBAF782724B6D9009B9F3C /* AnnualPlanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CBAF772724B6D9009B9F3C /* AnnualPlanApp.swift */; };
 		86CBAF7A2724B6D9009B9F3C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 86CBAF792724B6D9009B9F3C /* ContentView.swift */; };
 		86CBAF7C2724B6D9009B9F3C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 86CBAF7B2724B6D9009B9F3C /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		86346A7D27269C7C007F96DC /* AlertAddTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertAddTaskView.swift; sourceTree = "<group>"; };
 		86CBAF742724B6D9009B9F3C /* AnnualPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AnnualPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		86CBAF772724B6D9009B9F3C /* AnnualPlanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnualPlanApp.swift; sourceTree = "<group>"; };
 		86CBAF792724B6D9009B9F3C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				86CBAF952724BBC4009B9F3C /* Home.swift */,
 				86CBAF982724BBD6009B9F3C /* CalendarPicker.swift */,
 				86CBAFA12724FF5F009B9F3C /* dayView.swift */,
+				86346A7D27269C7C007F96DC /* AlertAddTaskView.swift */,
 			);
 			path = Calendar;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 			files = (
 				86CBAF932724B8CE009B9F3C /* Task.swift in Sources */,
 				86CBAFA22724FF5F009B9F3C /* dayView.swift in Sources */,
+				86346A7E27269C7C007F96DC /* AlertAddTaskView.swift in Sources */,
 				86CBAF8F2724B806009B9F3C /* DayValue.swift in Sources */,
 				86CBAF962724BBC4009B9F3C /* Home.swift in Sources */,
 				86CBAF992724BBD6009B9F3C /* CalendarPicker.swift in Sources */,
