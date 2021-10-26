@@ -15,32 +15,42 @@ struct AlertAddTaskView: View {
     var body: some View {
         VStack{
             HStack(spacing: 20) {
-                Image(systemName: "rectangle.and.pencil.and.ellipsis")
-                    .font(.title)
-                    .foregroundColor(.primary)
-                Text(currentDate.toString(dateFormat: "YYYY년 MM월 dd일"))
+                Text(currentDate.toString(dateFormat: "YYYY/MM/dd"))
+                    .font(.title2)
+                    .bold()
             }.padding(.horizontal)
+            
             VStack{
                 Toggle(isOn: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Is On@*/.constant(true)/*@END_MENU_TOKEN@*/) {
-                    Text(vacation[0])
+                    Text(vacation[0]).bold()
                 }
                 Toggle(isOn: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Is On@*/.constant(true)/*@END_MENU_TOKEN@*/) {
-                    Text(vacation[1])
+                    Text(vacation[1]).bold()
                 }
-            }
+            }.padding()
             
-            Button(action: {
-                self.isAlert = false
-            }, label: {
-                Image(systemName: "checkmark.circle.fill")
-                    .font(.title)
-                    .foregroundColor(.primary)
-            })
+            HStack(spacing: 30) {
+                Button(action: {
+                    self.isAlert.toggle()
+                }, label: {
+                    Image(systemName: "hand.thumbsup.fill")
+                        .font(.title)
+                        .foregroundColor(.primary)
+                })
+                Button(action: {
+                    self.isAlert.toggle()
+                }, label: {
+                    Image(systemName: "hand.thumbsdown.fill")
+                        .font(.title)
+                        .foregroundColor(.primary)
+                })
+            }
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: UIScreen.main.bounds.width * 0.5)
         .padding()
         .background(Color.gray)
         .cornerRadius(20)
+        .shadow(color: .black, radius: 5, x: 5, y: 5)
     }
 }
 
