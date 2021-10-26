@@ -67,6 +67,7 @@ struct CalendarPicker: View {
                     }
                 } // 날짜 표시부
             }
+            .blur(radius: isAlert ? 3.0 : 0) // blur 기능
             .onChange(of: shared.currentMonth, perform: { _ in
                 currentDate = shared.getCurrentMonth()
             })
@@ -76,7 +77,7 @@ struct CalendarPicker: View {
             
             if self.isAlert {
                 //Text("long click")
-                AlertAddTaskView(isAlert: $isAlert)
+                AlertAddTaskView(isAlert: $isAlert, currentDate: $currentDate)
             }
         }
     }

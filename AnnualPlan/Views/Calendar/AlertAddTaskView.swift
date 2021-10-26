@@ -9,6 +9,7 @@ import SwiftUI
 
 struct AlertAddTaskView: View {
     @Binding var isAlert: Bool
+    @Binding var currentDate: Date
     
     var vacation: [String] = ["연차", "월차"]
     var body: some View {
@@ -17,7 +18,7 @@ struct AlertAddTaskView: View {
                 Image(systemName: "rectangle.and.pencil.and.ellipsis")
                     .font(.title)
                     .foregroundColor(.primary)
-                Text("2021년 10월 20일")
+                Text(currentDate.toString(dateFormat: "YYYY년 MM월 dd일"))
             }.padding(.horizontal)
             VStack{
                 Toggle(isOn: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Is On@*/.constant(true)/*@END_MENU_TOKEN@*/) {
@@ -36,7 +37,6 @@ struct AlertAddTaskView: View {
                     .foregroundColor(.primary)
             })
         }
-
         .frame(maxWidth: .infinity)
         .padding()
         .background(Color.gray)
@@ -46,6 +46,6 @@ struct AlertAddTaskView: View {
 
 struct AlertAddTaskView_Previews: PreviewProvider {
     static var previews: some View {
-        AlertAddTaskView(isAlert: .constant(true))
+        AlertAddTaskView(isAlert: .constant(true), currentDate: .constant(Date()))
     }
 }
