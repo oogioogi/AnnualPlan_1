@@ -27,16 +27,13 @@ struct AlertAddTaskView: View {
                     shared.isSameDay(date1: detail.taskDate, date2: currentDate)
                 }) {
                     ForEach(taskDetail.task) { task in
-                        VStack(alignment: .leading, spacing: 10) {
-                            // for custom Time
-//                            Text(task.time.addingTimeInterval(TimeInterval(CGFloat.random(in: 0...5000))), style: .time)
-//                                .font(.caption).bold()
+                        VStack(alignment: .center, spacing: 10) {
                             Text(task.title)
                                 .font(.caption).bold()
                         }
                         .padding(.vertical, 10)
-                        .padding(.horizontal)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        //.padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .center)
                         .background(
                             Color.purple
                                 .opacity(0.5)
@@ -45,6 +42,13 @@ struct AlertAddTaskView: View {
                     }
                 }else {
                     Text("Task Not Found")
+                        .padding(.vertical, 10)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .background(
+                            Color.purple
+                                .opacity(0.5)
+                                .cornerRadius(10)
+                        )
                 }
                 
                 
