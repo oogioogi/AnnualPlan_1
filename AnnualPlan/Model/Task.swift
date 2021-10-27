@@ -10,7 +10,7 @@ import SwiftUI
 struct Task: Identifiable {
     var id: String = UUID().uuidString
     var title: String
-    var date: Date = Date().toLocalTime()
+    var time: Date = Date().toLocalTime()
 }
 
 struct TaskDetail: Identifiable {
@@ -30,16 +30,16 @@ class TaskClass: ObservableObject {
     
     @Published var tasks: [TaskDetail] = [
         TaskDetail(task: [
-            Task(title: "happy"),
-            Task(title: "happy")
+            Task(title: "연차"),
+            Task(title: "병원")
         ], taskDate: getSampleDate(offset: 1)),
         TaskDetail(task: [
-            Task(title: "happy"),
-            Task(title: "happy")
+            Task(title: "월차"),
+            Task(title: "관공서")
         ], taskDate: getSampleDate(offset: 2)),
         TaskDetail(task: [
-            Task(title: "happy"),
-            Task(title: "happy")
+            Task(title: "반차"),
+            Task(title: "병문안")
         ], taskDate: getSampleDate(offset: 3))
     ]
 }

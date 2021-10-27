@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct AlertAddTaskView: View {
+    @EnvironmentObject var taskClass: TaskClass
+    @EnvironmentObject var shared: SharedClass
     @Binding var isAlert: Bool
     @Binding var currentDate: Date
     
@@ -21,26 +23,51 @@ struct AlertAddTaskView: View {
             }.padding(.horizontal)
             
             VStack{
-                Toggle(isOn: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Is On@*/.constant(true)/*@END_MENU_TOKEN@*/) {
-                    Text(vacation[0]).bold()
+                if let taskDetail = taskClass.tasks.first(where: { detail in
+                    shared.isSameDay(date1: detail.taskDate, date2: currentDate)
+                }) {
+                    ForEach(taskDetail.task) { task in
+                        VStack(alignment: .leading, spacing: 10) {
+                            // for custom Time
+//                            Text(task.time.addingTimeInterval(TimeInterval(CGFloat.random(in: 0...5000))), style: .time)
+//                                .font(.caption).bold()
+                            Text(task.title)
+                                .font(.caption).bold()
+                        }
+                        .padding(.vertical, 10)
+                        .padding(.horizontal)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(
+                            Color.purple
+                                .opacity(0.5)
+                                .cornerRadius(10)
+                        )
+                    }
+                }else {
+                    Text("Task Not Found")
                 }
-                Toggle(isOn: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Is On@*/.constant(true)/*@END_MENU_TOKEN@*/) {
-                    Text(vacation[1]).bold()
-                }
+                
+                
+//                Toggle(isOn: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Is On@*/.constant(true)/*@END_MENU_TOKEN@*/) {
+//                    Text(vacation[0]).bold()
+//                }
+//                Toggle(isOn: /*@START_MENU_TOKEN@*//*@PLACEHOLDER=Is On@*/.constant(true)/*@END_MENU_TOKEN@*/) {
+//                    Text(vacation[1]).bold()
+//                }
             }.padding()
             
             HStack(spacing: 30) {
                 Button(action: {
                     self.isAlert.toggle()
                 }, label: {
-                    Image(systemName: "hand.thumbsup.fill")
+                    Image(systemName: "checkmark.circle.fill")
                         .font(.title)
                         .foregroundColor(.primary)
                 })
                 Button(action: {
                     self.isAlert.toggle()
                 }, label: {
-                    Image(systemName: "hand.thumbsdown.fill")
+                    Image(systemName: "xmark.circle.fill")
                         .font(.title)
                         .foregroundColor(.primary)
                 })
@@ -55,7 +82,12 @@ struct AlertAddTaskView: View {
 }
 
 struct AlertAddTaskView_Previews: PreviewProvider {
+    @StateObject static var taskClass = TaskClass()
+    @StateObject static var shared = SharedClass()
+    
     static var previews: some View {
         AlertAddTaskView(isAlert: .constant(true), currentDate: .constant(Date()))
+            .environmentObject(taskClass)
+            .environmentObject(shared)
     }
 }

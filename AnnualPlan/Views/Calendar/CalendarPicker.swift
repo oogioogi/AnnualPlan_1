@@ -11,11 +11,11 @@ struct CalendarPicker: View {
     @EnvironmentObject var taskClass: TaskClass
     @EnvironmentObject var shared: SharedClass
     @Binding var currentDate: Date
-    @State private var isAlert: Bool = false
-
+    @Binding var isAlert: Bool
+    
     var body: some View {
     
-        ZStack {
+        
             VStack(spacing: 20) {
                 HStack(spacing: 20) {
                     VStack(alignment: .leading, spacing: 2) {
@@ -63,23 +63,20 @@ struct CalendarPicker: View {
                             }
                             .onLongPressGesture {
                                 self.isAlert.toggle()
+                                // var NewValue: DayValue
+                                // NewValue = value
+                                // AlertAddTaskView(isAlert: $isAlert, currentDate: $currentDate, value: NewValue)
+                                //
                             }
                     }
                 } // 날짜 표시부
             }
-            .blur(radius: isAlert ? 3.0 : 0) // blur 기능
             .onChange(of: shared.currentMonth, perform: { _ in
                 currentDate = shared.getCurrentMonth()
             })
             .onAppear(perform: {
                 currentDate = shared.getCurrentMonth()
         })
-            
-            if self.isAlert {
-                //Text("long click")
-                AlertAddTaskView(isAlert: $isAlert, currentDate: $currentDate)
-            }
-        }
     }
     
     func extractDate() -> [String] {

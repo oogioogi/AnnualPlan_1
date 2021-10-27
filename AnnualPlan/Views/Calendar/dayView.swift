@@ -62,9 +62,6 @@ struct dayView_Previews: PreviewProvider {
         Home()
             .environmentObject(taskClass)
             .environmentObject(shared)
-//        dayView(currentDate: .constant(Date()), value: DayValue(day: 15, date: Date().toLocalTime()))
-//            .environmentObject(taskClass)
-//            .environmentObject(shared)
     }
 }
 
