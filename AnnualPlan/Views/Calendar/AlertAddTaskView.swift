@@ -50,38 +50,87 @@ struct AlertAddTaskView: View {
         .padding(.horizontal)
     }
     // middle View
+//    func middleView() -> some View {
+//        VStack{
+//            if let taskDetail = taskClass.tasks.first(where: { detail in
+//                shared.isSameDay(date1: detail.taskDate, date2: currentDate)
+//            }) {
+//                ForEach(taskDetail.task) { task in
+//                    VStack(alignment: .center, spacing: 10) {
+//                        Text(task.title)
+//                            .font(.caption).bold()
+//                    }
+//                    .padding(.vertical, 10)
+//                    .frame(maxWidth: .infinity, alignment: .center)
+//                    .background(
+//                        Color.purple
+//                            .opacity(0.5)
+//                            .cornerRadius(10)
+//                    )
+//                    .onTapGesture {
+//                        debugPrint("clicked tap")
+//                    }
+//                }
+//            }else {
+//                Text("Task Not Found")
+//                    .padding(.vertical, 10)
+//                    .frame(maxWidth: .infinity, alignment: .center)
+//                    .background(
+//                        Color.purple
+//                            .opacity(0.5)
+//                            .cornerRadius(10)
+//                    )
+//            }
+//        }.padding()
+//    }
+    // middle View
     func middleView() -> some View {
-        VStack{
+        List {
             if let taskDetail = taskClass.tasks.first(where: { detail in
                 shared.isSameDay(date1: detail.taskDate, date2: currentDate)
             }) {
                 ForEach(taskDetail.task) { task in
-                    VStack(alignment: .center, spacing: 10) {
-                        Text(task.title)
-                            .font(.caption).bold()
-                    }
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .background(
-                        Color.purple
-                            .opacity(0.5)
-                            .cornerRadius(10)
-                    )
-                    .onTapGesture {
-                        debugPrint("clicked tap")
-                    }
-                }
+                    Text(task.title)
+                        .font(.caption).bold()
+                }.onDelete(perform: delete)
             }else {
                 Text("Task Not Found")
-                    .padding(.vertical, 10)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .background(
-                        Color.purple
-                            .opacity(0.5)
-                            .cornerRadius(10)
-                    )
+                    .font(.caption).bold()
             }
-        }.padding()
+        }
+        .listStyle(SidebarListStyle())
+        .frame(height: UIScreen.main.bounds.height * 0.15)
+        .cornerRadius(15.0)
+        
+    }
+    //
+    /*
+     CarouselListStyle
+     DefaultListStyle
+     EllipticalListStyle
+     GroupedListStyle
+     InsetGroupedListStyle
+     InsetListStyle
+     PlainListStyle
+     SidebarListStyle
+     */
+    // 리스트 왼쪽으로 밀어서 삭제 함
+    func delete(at offset: IndexSet) {
+        let removeTaskIndex = taskClass.tasks.firstIndex { tasked in
+            tasked.taskDate == currentDate
+        }
+        if removeTaskIndex != nil {
+            debugPrint(removeTaskIndex?.description as Any) // debug
+            debugPrint(offset.first as Any) // debug
+            let taskCount = taskClass.tasks[removeTaskIndex!].task.count
+            if taskCount > 1 {
+                //taskClass.tasks[removeTaskIndex!].task.remove(at: taskCount - 1)
+                taskClass.tasks[removeTaskIndex!].task.remove(at: offset.first!)
+            }else {
+                taskClass.tasks.remove(at: removeTaskIndex!)
+            }
+            
+        }
     }
     // bottom View
     func bottomView() -> some View {
