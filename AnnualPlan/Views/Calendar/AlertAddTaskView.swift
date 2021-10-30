@@ -12,6 +12,8 @@ struct AlertAddTaskView: View {
     @EnvironmentObject var shared: SharedClass
     @Binding var isAlert: Bool
     @Binding var currentDate: Date
+    @State var title: String = ""
+    @State var isEditing: Bool = false
     
     var vacation: [String] = ["연차", "월차"]
     var body: some View {
@@ -103,17 +105,6 @@ struct AlertAddTaskView: View {
         .cornerRadius(15.0)
         
     }
-    //
-    /*
-     CarouselListStyle
-     DefaultListStyle
-     EllipticalListStyle
-     GroupedListStyle
-     InsetGroupedListStyle
-     InsetListStyle
-     PlainListStyle
-     SidebarListStyle
-     */
     // 리스트 왼쪽으로 밀어서 삭제 함
     func delete(at offset: IndexSet) {
         let removeTaskIndex = taskClass.tasks.firstIndex { tasked in
@@ -134,49 +125,67 @@ struct AlertAddTaskView: View {
     }
     // bottom View
     func bottomView() -> some View {
-        HStack(spacing: 30) {
+        HStack {
             // task appending
+            TextField("insert...", text: $title) { isEditing in
+                self.isEditing = isEditing
+                debugPrint(isEditing.description)
+            }
+            .foregroundColor(isEditing ? .black : .gray)
+            .cornerRadius(10)
+            .autocapitalization(.none)
+            .textFieldStyle(RoundedBorderTextFieldStyle())
+            
             Button(action: {
                 if let appendTaskIndex = taskClass.tasks.firstIndex(where: { tasked in
                     tasked.taskDate == currentDate
                 }) {
                     debugPrint(appendTaskIndex)
                     debugPrint(currentDate)
-                    taskClass.tasks[appendTaskIndex].task.append(Task(title: "New Annul"))
+                    if !title.isEmpty {
+                        taskClass.tasks[appendTaskIndex].task.append(Task(title: title))
+                        self.title = ""
+                    }
+                    
                    
                 }else {
                     debugPrint(currentDate)
-                    taskClass.tasks.append(TaskDetail(task: [Task(title: "Annul")], taskDate: currentDate))
+                    if !title.isEmpty {
+                        taskClass.tasks.append(TaskDetail(task: [Task(title: title)], taskDate: currentDate))
+                        self.title = ""
+                    }
                 }
                 //동일 날짜는 Task만을 추가 한다
             }, label: {
                 Image(systemName: "plus.circle.fill")
                     .font(.title)
                     .foregroundColor(.primary)
+                    //.opacity(isEditing ? 1.0 : 0.0)
             })
             
             // task delete
-            Button(action: {
-                let removeTaskIndex = taskClass.tasks.firstIndex { tasked in
-                    tasked.taskDate == currentDate
-                }
-
-                if removeTaskIndex != nil {
-                    debugPrint(removeTaskIndex?.description as Any)
-                    let taskCount = taskClass.tasks[removeTaskIndex!].task.count
-                    if taskCount > 1 {
-                        taskClass.tasks[removeTaskIndex!].task.remove(at: taskCount - 1)
-                    }else {
-                        taskClass.tasks.remove(at: removeTaskIndex!)
-                    }
-                    
-                }
-            }, label: {
-                Image(systemName: "minus.circle.fill")
-                    .font(.title)
-                    .foregroundColor(.primary)
-            })
+//            Button(action: {
+//                let removeTaskIndex = taskClass.tasks.firstIndex { tasked in
+//                    tasked.taskDate == currentDate
+//                }
+//
+//                if removeTaskIndex != nil {
+//                    debugPrint(removeTaskIndex?.description as Any)
+//                    let taskCount = taskClass.tasks[removeTaskIndex!].task.count
+//                    if taskCount > 1 {
+//                        taskClass.tasks[removeTaskIndex!].task.remove(at: taskCount - 1)
+//                    }else {
+//                        taskClass.tasks.remove(at: removeTaskIndex!)
+//                    }
+//
+//                }
+//            }, label: {
+//                Image(systemName: "minus.circle.fill")
+//                    .font(.title)
+//                    .foregroundColor(.primary)
+//            })
         }
+       
     }
 }
 

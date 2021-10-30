@@ -28,6 +28,9 @@ func getSampleDate(offset: Int) -> Date {
 
 class TaskClass: ObservableObject {
     
+//    @Published var tasks: [TaskDetail] = [
+//    ]
+    
     @Published var tasks: [TaskDetail] = [
         TaskDetail(task: [
             Task(title: "연차"),
